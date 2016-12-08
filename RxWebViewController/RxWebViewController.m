@@ -132,7 +132,7 @@
     self.isSwipingBack = YES;
     //create a center of scrren
     CGPoint center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    
+
     self.currentSnapShotView = [self.webView snapshotViewAfterScreenUpdates:YES];
     
     //add shadows just like UINavigationController
@@ -223,6 +223,7 @@
 #pragma mark - update nav items
 
 -(void)updateNavigationItems{
+    // 如果页面可以返回，则禁止通过手势将控制器pop出
     if (self.webView.canGoBack) {
         UIBarButtonItem *spaceButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
         spaceButtonItem.width = -6.5;
@@ -232,7 +233,9 @@
         
         //弃用customBackBarItem，使用原生backButtonItem
 //        [self.navigationItem setLeftBarButtonItems:@[spaceButtonItem,self.customBackBarItem,self.closeButtonItem] animated:NO];
-    }else{
+    }
+    // 否则取消禁止手势将控制器pop出
+    else{
         self.navigationController.interactivePopGestureRecognizer.enabled = YES;
         [self.navigationItem setLeftBarButtonItems:nil];
     }
